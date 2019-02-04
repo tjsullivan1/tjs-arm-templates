@@ -26,8 +26,8 @@
             "defaultValue": "$Default",
             "type": "String"
         },
-        "namespaces_gws_lab_name": {
-            "defaultValue": "gws-lab",
+        "namespaces_gws_lab_prefix": {
+            "defaultValue": "def-lab",
             "type": "String"
         },
         "eventhubs_lab_name": {
@@ -46,7 +46,9 @@
             }
         }
     },
-    "variables": {},
+    "variables": {
+        "namespaces_gws_lab_name": "[toLower(concat(parameters('namespaces_gws_lab_prefix'),'-',uniqueString(resourceGroup().id)))]"
+    },
     "resources": [
         {
             "type": "Microsoft.EventHub/namespaces",
@@ -55,7 +57,7 @@
                 "tier": "Standard",
                 "capacity": 3
             },
-            "name": "[parameters('namespaces_gws_lab_name')]",
+            "name": "[variables('namespaces_gws_lab_name')]",
             "apiVersion": "2017-04-01",
             "location": "[parameters('location')]",
             "tags": {},
@@ -68,7 +70,7 @@
         },
         {
             "type": "Microsoft.EventHub/namespaces/AuthorizationRules",
-            "name": "[concat(parameters('namespaces_gws_lab_name'), '/', parameters('AuthorizationRules_RootManageSharedAccessKey_name'))]",
+            "name": "[concat(variables('namespaces_gws_lab_name'), '/', parameters('AuthorizationRules_RootManageSharedAccessKey_name'))]",
             "apiVersion": "2017-04-01",
             "location": "[parameters('location')]",
             "scale": null,
@@ -80,12 +82,12 @@
                 ]
             },
             "dependsOn": [
-                "[resourceId('Microsoft.EventHub/namespaces', parameters('namespaces_gws_lab_name'))]"
+                "[resourceId('Microsoft.EventHub/namespaces', variables('namespaces_gws_lab_name'))]"
             ]
         },
         {
             "type": "Microsoft.EventHub/namespaces/AuthorizationRules",
-            "name": "[concat(parameters('namespaces_gws_lab_name'), '/', parameters('AuthorizationRules_lab_name'))]",
+            "name": "[concat(variables('namespaces_gws_lab_name'), '/', parameters('AuthorizationRules_lab_name'))]",
             "apiVersion": "2017-04-01",
             "location": "[parameters('location')]",
             "scale": null,
@@ -96,12 +98,12 @@
                 ]
             },
             "dependsOn": [
-                "[resourceId('Microsoft.EventHub/namespaces', parameters('namespaces_gws_lab_name'))]"
+                "[resourceId('Microsoft.EventHub/namespaces', variables('namespaces_gws_lab_name'))]"
             ]
         },
         {
             "type": "Microsoft.EventHub/namespaces/eventhubs",
-            "name": "[concat(parameters('namespaces_gws_lab_name'), '/', parameters('eventhubs_crimes_aeh_name'))]",
+            "name": "[concat(variables('namespaces_gws_lab_name'), '/', parameters('eventhubs_crimes_aeh_name'))]",
             "apiVersion": "2017-04-01",
             "location": "[parameters('location')]",
             "scale": null,
@@ -111,12 +113,12 @@
                 "status": "Active"
             },
             "dependsOn": [
-                "[resourceId('Microsoft.EventHub/namespaces', parameters('namespaces_gws_lab_name'))]"
+                "[resourceId('Microsoft.EventHub/namespaces', variables('namespaces_gws_lab_name'))]"
             ]
         },
         {
             "type": "Microsoft.EventHub/namespaces/eventhubs",
-            "name": "[concat(parameters('namespaces_gws_lab_name'), '/', parameters('eventhubs_lab_name'))]",
+            "name": "[concat(variables('namespaces_gws_lab_name'), '/', parameters('eventhubs_lab_name'))]",
             "apiVersion": "2017-04-01",
             "location": "[parameters('location')]",
             "scale": null,
@@ -126,12 +128,12 @@
                 "status": "Active"
             },
             "dependsOn": [
-                "[resourceId('Microsoft.EventHub/namespaces', parameters('namespaces_gws_lab_name'))]"
+                "[resourceId('Microsoft.EventHub/namespaces', variables('namespaces_gws_lab_name'))]"
             ]
         },
         {
             "type": "Microsoft.EventHub/namespaces/eventhubs/authorizationRules",
-            "name": "[concat(parameters('namespaces_gws_lab_name'), '/', parameters('eventhubs_crimes_aeh_name'), '/', parameters('authorizationRules_lab_name_1'))]",
+            "name": "[concat(variables('namespaces_gws_lab_name'), '/', parameters('eventhubs_crimes_aeh_name'), '/', parameters('authorizationRules_lab_name_1'))]",
             "apiVersion": "2017-04-01",
             "location": "[parameters('location')]",
             "scale": null,
@@ -143,44 +145,44 @@
                 ]
             },
             "dependsOn": [
-                "[resourceId('Microsoft.EventHub/namespaces', parameters('namespaces_gws_lab_name'))]",
-                "[resourceId('Microsoft.EventHub/namespaces/eventhubs', parameters('namespaces_gws_lab_name'), parameters('eventhubs_crimes_aeh_name'))]"
+                "[resourceId('Microsoft.EventHub/namespaces', variables('namespaces_gws_lab_name'))]",
+                "[resourceId('Microsoft.EventHub/namespaces/eventhubs', variables('namespaces_gws_lab_name'), parameters('eventhubs_crimes_aeh_name'))]"
             ]
         },
         {
             "type": "Microsoft.EventHub/namespaces/eventhubs/consumergroups",
-            "name": "[concat(parameters('namespaces_gws_lab_name'), '/', parameters('eventhubs_crimes_aeh_name'), '/', parameters('consumergroups_$Default_name_1'))]",
+            "name": "[concat(variables('namespaces_gws_lab_name'), '/', parameters('eventhubs_crimes_aeh_name'), '/', parameters('consumergroups_$Default_name_1'))]",
             "apiVersion": "2017-04-01",
             "location": "[parameters('location')]",
             "scale": null,
             "properties": {},
             "dependsOn": [
-                "[resourceId('Microsoft.EventHub/namespaces', parameters('namespaces_gws_lab_name'))]",
-                "[resourceId('Microsoft.EventHub/namespaces/eventhubs', parameters('namespaces_gws_lab_name'), parameters('eventhubs_crimes_aeh_name'))]"
+                "[resourceId('Microsoft.EventHub/namespaces', variables('namespaces_gws_lab_name'))]",
+                "[resourceId('Microsoft.EventHub/namespaces/eventhubs', variables('namespaces_gws_lab_name'), parameters('eventhubs_crimes_aeh_name'))]"
             ]
         },
         {
             "type": "Microsoft.EventHub/namespaces/eventhubs/consumergroups",
-            "name": "[concat(parameters('namespaces_gws_lab_name'), '/', parameters('eventhubs_crimes_aeh_name'), '/', parameters('consumergroups_crimes_chicago_cg_name'))]",
+            "name": "[concat(variables('namespaces_gws_lab_name'), '/', parameters('eventhubs_crimes_aeh_name'), '/', parameters('consumergroups_crimes_chicago_cg_name'))]",
             "apiVersion": "2017-04-01",
             "location": "[parameters('location')]",
             "scale": null,
             "properties": {},
             "dependsOn": [
-                "[resourceId('Microsoft.EventHub/namespaces', parameters('namespaces_gws_lab_name'))]",
-                "[resourceId('Microsoft.EventHub/namespaces/eventhubs', parameters('namespaces_gws_lab_name'), parameters('eventhubs_crimes_aeh_name'))]"
+                "[resourceId('Microsoft.EventHub/namespaces', variables('namespaces_gws_lab_name'))]",
+                "[resourceId('Microsoft.EventHub/namespaces/eventhubs', variables('namespaces_gws_lab_name'), parameters('eventhubs_crimes_aeh_name'))]"
             ]
         },
         {
             "type": "Microsoft.EventHub/namespaces/eventhubs/consumergroups",
-            "name": "[concat(parameters('namespaces_gws_lab_name'), '/', parameters('eventhubs_lab_name'), '/', parameters('consumergroups_$Default_name'))]",
+            "name": "[concat(variables('namespaces_gws_lab_name'), '/', parameters('eventhubs_lab_name'), '/', parameters('consumergroups_$Default_name'))]",
             "apiVersion": "2017-04-01",
             "location": "[parameters('location')]",
             "scale": null,
             "properties": {},
             "dependsOn": [
-                "[resourceId('Microsoft.EventHub/namespaces', parameters('namespaces_gws_lab_name'))]",
-                "[resourceId('Microsoft.EventHub/namespaces/eventhubs', parameters('namespaces_gws_lab_name'), parameters('eventhubs_lab_name'))]"
+                "[resourceId('Microsoft.EventHub/namespaces', variables('namespaces_gws_lab_name'))]",
+                "[resourceId('Microsoft.EventHub/namespaces/eventhubs', variables('namespaces_gws_lab_name'), parameters('eventhubs_lab_name'))]"
             ]
         }
     ],
