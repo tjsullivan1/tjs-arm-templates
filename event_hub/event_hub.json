@@ -7,11 +7,11 @@
             "type": "String"
         },
         "namespaces_prefix": {
-            "defaultValue": "def-lab",
+            "defaultValue": "def-nsp",
             "type": "String"
         },
         "eventhubs_name": {
-            "defaultValue": "lab",
+            "defaultValue": "def-eh",
             "type": "String"
         },
         "location": {
