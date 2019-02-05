@@ -25,7 +25,7 @@
             "kind": "Storage",
             "name": "[parameters('storageAccounts_gwsstoragelab_name')]",
             "apiVersion": "2018-07-01",
-            "location": "eastus2",
+            "location": "[parameters('location')]",
             "tags": {},
             "scale": null,
             "properties": {

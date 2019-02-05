@@ -25,7 +25,7 @@
             "kind": "StorageV2",
             "name": "[parameters('storageAccounts_gwslabgen2_name')]",
             "apiVersion": "2018-07-01",
-            "location": "northcentralus",
+            "location": "[parameters('location')]",
             "tags": {},
             "scale": null,
             "properties": {
