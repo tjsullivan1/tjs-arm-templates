@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "server_name_prefix": {
-            "defaultValue": "def_db_srv",
+            "defaultValue": "defdbsrv",
             "type": "String"
         },
         "database_name": {
