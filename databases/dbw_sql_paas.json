@@ -1,0 +1,434 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "servers_gws_lab_srv_name": {
+            "defaultValue": "gws-lab-srv",
+            "type": "string"
+        },
+        "advisors_CreateIndex_name": {
+            "defaultValue": "CreateIndex",
+            "type": "string"
+        },
+        "advisors_DefragmentIndex_name": {
+            "defaultValue": "DefragmentIndex",
+            "type": "string"
+        },
+        "auditingPolicies_Default_name": {
+            "defaultValue": "Default",
+            "type": "string"
+        },
+        "transparentDataEncryption_current_name": {
+            "defaultValue": "current",
+            "type": "string"
+        },
+        "transparentDataEncryption_current_name_1": {
+            "defaultValue": "current",
+            "type": "string"
+        },
+        "advisors_ForceLastGoodPlan_name": {
+            "defaultValue": "ForceLastGoodPlan",
+            "type": "string"
+        },
+        "advisors_DbParameterization_name": {
+            "defaultValue": "DbParameterization",
+            "type": "string"
+        },
+        "advisors_CreateIndex_name_1": {
+            "defaultValue": "CreateIndex",
+            "type": "string"
+        },
+        "advisors_DropIndex_name": {
+            "defaultValue": "DropIndex",
+            "type": "string"
+        },
+        "advisors_DropIndex_name_1": {
+            "defaultValue": "DropIndex",
+            "type": "string"
+        },
+        "auditingPolicies_Default_name_1": {
+            "defaultValue": "Default",
+            "type": "string"
+        },
+        "databases_master_name": {
+            "defaultValue": "master",
+            "type": "string"
+        },
+        "advisors_DefragmentIndex_name_1": {
+            "defaultValue": "DefragmentIndex",
+            "type": "string"
+        },
+        "auditingPolicies_Default_name_2": {
+            "defaultValue": "Default",
+            "type": "string"
+        },
+        "geoBackupPolicies_Default_name": {
+            "defaultValue": "Default",
+            "type": "string"
+        },
+        "geoBackupPolicies_Default_name_1": {
+            "defaultValue": "Default",
+            "type": "string"
+        },
+        "advisors_ForceLastGoodPlan_name_1": {
+            "defaultValue": "ForceLastGoodPlan",
+            "type": "string"
+        },
+        "advisors_DbParameterization_name_1": {
+            "defaultValue": "DbParameterization",
+            "type": "string"
+        },
+        "encryptionProtector_current_name": {
+            "defaultValue": "current",
+            "type": "string"
+        },
+        "keys_ServiceManaged_name": {
+            "defaultValue": "ServiceManaged",
+            "type": "string"
+        },
+        "databases_gws_lab_name": {
+            "defaultValue": "gws-lab",
+            "type": "string"
+        },
+        "firewallRules_AllowAllWindowsAzureIps_name": {
+            "defaultValue": "AllowAllWindowsAzureIps",
+            "type": "string"
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "[resourceGroup().location]",
+            "metadata": {
+                "description": "Location for all resources."
+            }
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Sql/servers",
+            "kind": "v12.0",
+            "name": "[parameters('servers_gws_lab_srv_name')]",
+            "apiVersion": "2015-05-01-preview",
+            "location": "[parameters('location')]",
+            "scale": null,
+            "properties": {
+                "administratorLogin": "chris",
+                "version": "12.0"
+            },
+            "dependsOn": []
+        },
+        {
+            "type": "Microsoft.Sql/servers/advisors",
+            "name": "[concat(parameters('servers_gws_lab_srv_name'), '/', parameters('advisors_CreateIndex_name'))]",
+            "apiVersion": "2014-04-01",
+            "scale": null,
+            "properties": {
+                "autoExecuteValue": "Disabled"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_gws_lab_srv_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Sql/servers/advisors",
+            "name": "[concat(parameters('servers_gws_lab_srv_name'), '/', parameters('advisors_DropIndex_name'))]",
+            "apiVersion": "2014-04-01",
+            "scale": null,
+            "properties": {
+                "autoExecuteValue": "Disabled"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_gws_lab_srv_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Sql/servers/advisors",
+            "name": "[concat(parameters('servers_gws_lab_srv_name'), '/', parameters('advisors_DbParameterization_name'))]",
+            "apiVersion": "2014-04-01",
+            "scale": null,
+            "properties": {
+                "autoExecuteValue": "Disabled"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_gws_lab_srv_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Sql/servers/advisors",
+            "name": "[concat(parameters('servers_gws_lab_srv_name'), '/', parameters('advisors_DefragmentIndex_name'))]",
+            "apiVersion": "2014-04-01",
+            "scale": null,
+            "properties": {
+                "autoExecuteValue": "Disabled"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_gws_lab_srv_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Sql/servers/advisors",
+            "name": "[concat(parameters('servers_gws_lab_srv_name'), '/', parameters('advisors_ForceLastGoodPlan_name'))]",
+            "apiVersion": "2014-04-01",
+            "scale": null,
+            "properties": {
+                "autoExecuteValue": "Disabled"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_gws_lab_srv_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Sql/servers/auditingPolicies",
+            "name": "[concat(parameters('servers_gws_lab_srv_name'), '/', parameters('auditingPolicies_Default_name'))]",
+            "apiVersion": "2014-04-01",
+            "location": "[parameters('location')]",
+            "scale": null,
+            "properties": {
+                "auditingState": "New",
+                "eventTypesToAudit": "PlainSQL_Success,PlainSQL_Failure,ParameterizedSQL_Success,ParameterizedSQL_Failure,StoredProcedure_Success,StoredProcedure_Failure,Login_Success,Login_Failure,TransactionManagement_Success,TransactionManagement_Failure",
+                "storageAccountName": null,
+                "storageAccountKey": null,
+                "storageAccountSecondaryKey": null,
+                "storageTableEndpoint": null,
+                "storageAccountResourceGroupName": null,
+                "storageAccountSubscriptionId": null,
+                "fullAuditLogsTableName": "SQLDBAuditLogsGwslabsrv",
+                "auditLogsTableName": "Gwslabsrv",
+                "retentionDays": "0"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_gws_lab_srv_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Sql/servers/databases",
+            "sku": {
+                "name": "S4",
+                "tier": "Standard"
+            },
+            "kind": "v12.0,user",
+            "name": "[concat(parameters('servers_gws_lab_srv_name'), '/', parameters('databases_gws_lab_name'))]",
+            "apiVersion": "2017-03-01-preview",
+            "location": "[parameters('location')]",
+            "scale": null,
+            "properties": {
+                "collation": "SQL_Latin1_General_CP1_CI_AS",
+                "maxSizeBytes": 268435456000,
+                "catalogCollation": "SQL_Latin1_General_CP1_CI_AS",
+                "zoneRedundant": false
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_gws_lab_srv_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Sql/servers/firewallRules",
+            "name": "[concat(parameters('servers_gws_lab_srv_name'), '/', parameters('firewallRules_AllowAllWindowsAzureIps_name'))]",
+            "apiVersion": "2015-05-01-preview",
+            "scale": null,
+            "properties": {
+                "startIpAddress": "0.0.0.0",
+                "endIpAddress": "0.0.0.0"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_gws_lab_srv_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Sql/servers/encryptionProtector",
+            "kind": "servicemanaged",
+            "name": "[concat(parameters('servers_gws_lab_srv_name'), '/', parameters('encryptionProtector_current_name'))]",
+            "apiVersion": "2015-05-01-preview",
+            "scale": null,
+            "properties": {
+                "serverKeyName": "ServiceManaged",
+                "serverKeyType": "ServiceManaged"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_gws_lab_srv_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Sql/servers/keys",
+            "kind": "servicemanaged",
+            "name": "[concat(parameters('servers_gws_lab_srv_name'), '/', parameters('keys_ServiceManaged_name'))]",
+            "apiVersion": "2015-05-01-preview",
+            "scale": null,
+            "properties": {
+                "serverKeyType": "[parameters('keys_ServiceManaged_name')]"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_gws_lab_srv_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Sql/servers/databases/advisors",
+            "name": "[concat(parameters('servers_gws_lab_srv_name'), '/', parameters('databases_gws_lab_name'), '/', parameters('advisors_CreateIndex_name_1'))]",
+            "apiVersion": "2014-04-01",
+            "scale": null,
+            "properties": {
+                "autoExecuteValue": "Disabled"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_gws_lab_srv_name'))]",
+                "[resourceId('Microsoft.Sql/servers/databases', parameters('servers_gws_lab_srv_name'), parameters('databases_gws_lab_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Sql/servers/databases/advisors",
+            "name": "[concat(parameters('servers_gws_lab_srv_name'), '/', parameters('databases_gws_lab_name'), '/', parameters('advisors_DropIndex_name_1'))]",
+            "apiVersion": "2014-04-01",
+            "scale": null,
+            "properties": {
+                "autoExecuteValue": "Disabled"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_gws_lab_srv_name'))]",
+                "[resourceId('Microsoft.Sql/servers/databases', parameters('servers_gws_lab_srv_name'), parameters('databases_gws_lab_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Sql/servers/databases/advisors",
+            "name": "[concat(parameters('servers_gws_lab_srv_name'), '/', parameters('databases_gws_lab_name'), '/', parameters('advisors_DbParameterization_name_1'))]",
+            "apiVersion": "2014-04-01",
+            "scale": null,
+            "properties": {
+                "autoExecuteValue": "Disabled"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_gws_lab_srv_name'))]",
+                "[resourceId('Microsoft.Sql/servers/databases', parameters('servers_gws_lab_srv_name'), parameters('databases_gws_lab_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Sql/servers/databases/advisors",
+            "name": "[concat(parameters('servers_gws_lab_srv_name'), '/', parameters('databases_gws_lab_name'), '/', parameters('advisors_DefragmentIndex_name_1'))]",
+            "apiVersion": "2014-04-01",
+            "scale": null,
+            "properties": {
+                "autoExecuteValue": "Disabled"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_gws_lab_srv_name'))]",
+                "[resourceId('Microsoft.Sql/servers/databases', parameters('servers_gws_lab_srv_name'), parameters('databases_gws_lab_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Sql/servers/databases/advisors",
+            "name": "[concat(parameters('servers_gws_lab_srv_name'), '/', parameters('databases_gws_lab_name'), '/', parameters('advisors_ForceLastGoodPlan_name_1'))]",
+            "apiVersion": "2014-04-01",
+            "scale": null,
+            "properties": {
+                "autoExecuteValue": "Disabled"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_gws_lab_srv_name'))]",
+                "[resourceId('Microsoft.Sql/servers/databases', parameters('servers_gws_lab_srv_name'), parameters('databases_gws_lab_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Sql/servers/databases/auditingPolicies",
+            "name": "[concat(parameters('servers_gws_lab_srv_name'), '/', parameters('databases_gws_lab_name'), '/', parameters('auditingPolicies_Default_name_2'))]",
+            "apiVersion": "2014-04-01",
+            "location": "[parameters('location')]",
+            "scale": null,
+            "properties": {
+                "auditingState": "New",
+                "eventTypesToAudit": "PlainSQL_Success,PlainSQL_Failure,ParameterizedSQL_Success,ParameterizedSQL_Failure,StoredProcedure_Success,StoredProcedure_Failure,Login_Success,Login_Failure,TransactionManagement_Success,TransactionManagement_Failure",
+                "storageAccountName": null,
+                "storageAccountKey": null,
+                "storageAccountSecondaryKey": null,
+                "storageTableEndpoint": null,
+                "storageAccountResourceGroupName": null,
+                "storageAccountSubscriptionId": null,
+                "useServerDefault": "Enabled",
+                "fullAuditLogsTableName": "SQLDBAuditLogsGwslabsrvGwslab",
+                "auditLogsTableName": "GwslabsrvGwslab",
+                "retentionDays": "0"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_gws_lab_srv_name'))]",
+                "[resourceId('Microsoft.Sql/servers/databases', parameters('servers_gws_lab_srv_name'), parameters('databases_gws_lab_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Sql/servers/databases/geoBackupPolicies",
+            "name": "[concat(parameters('servers_gws_lab_srv_name'), '/', parameters('databases_gws_lab_name'), '/', parameters('geoBackupPolicies_Default_name_1'))]",
+            "apiVersion": "2014-04-01",
+            "location": "[parameters('location')]",
+            "scale": null,
+            "properties": {
+                "state": "Enabled"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_gws_lab_srv_name'))]",
+                "[resourceId('Microsoft.Sql/servers/databases', parameters('servers_gws_lab_srv_name'), parameters('databases_gws_lab_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Sql/servers/databases/transparentDataEncryption",
+            "name": "[concat(parameters('servers_gws_lab_srv_name'), '/', parameters('databases_gws_lab_name'), '/', parameters('transparentDataEncryption_current_name_1'))]",
+            "apiVersion": "2014-04-01",
+            "location": "[parameters('location')]",
+            "scale": null,
+            "properties": {
+                "status": "Enabled"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_gws_lab_srv_name'))]",
+                "[resourceId('Microsoft.Sql/servers/databases', parameters('servers_gws_lab_srv_name'), parameters('databases_gws_lab_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Sql/servers/databases/auditingPolicies",
+            "name": "[concat(parameters('servers_gws_lab_srv_name'), '/', parameters('databases_master_name'), '/', parameters('auditingPolicies_Default_name_1'))]",
+            "apiVersion": "2014-04-01",
+            "location": "[parameters('location')]",
+            "scale": null,
+            "properties": {
+                "auditingState": "New",
+                "eventTypesToAudit": "PlainSQL_Success,PlainSQL_Failure,ParameterizedSQL_Success,ParameterizedSQL_Failure,StoredProcedure_Success,StoredProcedure_Failure,Login_Success,Login_Failure,TransactionManagement_Success,TransactionManagement_Failure",
+                "storageAccountName": null,
+                "storageAccountKey": null,
+                "storageAccountSecondaryKey": null,
+                "storageTableEndpoint": null,
+                "storageAccountResourceGroupName": null,
+                "storageAccountSubscriptionId": null,
+                "useServerDefault": "Enabled",
+                "fullAuditLogsTableName": "SQLDBAuditLogsGwslabsrvMaster",
+                "auditLogsTableName": "GwslabsrvMaster",
+                "retentionDays": "0"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_gws_lab_srv_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Sql/servers/databases/geoBackupPolicies",
+            "name": "[concat(parameters('servers_gws_lab_srv_name'), '/', parameters('databases_master_name'), '/', parameters('geoBackupPolicies_Default_name'))]",
+            "apiVersion": "2014-04-01",
+            "location": "[parameters('location')]",
+            "scale": null,
+            "properties": {
+                "state": "Enabled"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_gws_lab_srv_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Sql/servers/databases/transparentDataEncryption",
+            "name": "[concat(parameters('servers_gws_lab_srv_name'), '/', parameters('databases_master_name'), '/', parameters('transparentDataEncryption_current_name'))]",
+            "apiVersion": "2014-04-01",
+            "location": "[parameters('location')]",
+            "scale": null,
+            "properties": {
+                "status": "Disabled"
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Sql/servers', parameters('servers_gws_lab_srv_name'))]"
+            ]
+        }
+    ],
+    "outputs": {}
+}
