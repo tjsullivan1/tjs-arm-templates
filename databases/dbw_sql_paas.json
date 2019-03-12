@@ -94,6 +94,19 @@
             "defaultValue": "AllowAllWindowsAzureIps",
             "type": "string"
         },
+        "db_admin_name": {
+            "defaultValue": "dbw_admin",
+            "type": "string",
+            "metadata": {
+                "description": ""
+            }
+        },
+        "db_admin_pass": {
+            "type": "string",
+            "metadata": {
+                "description": ""
+            }
+        },
         "location": {
             "type": "string",
             "defaultValue": "[resourceGroup().location]",
@@ -112,7 +125,8 @@
             "location": "[parameters('location')]",
             "scale": null,
             "properties": {
-                "administratorLogin": "chris",
+                "administratorLogin": "[parameters('db_admin_name')]",
+                "administratorLoginPassword": "[parameters('db_admin_pass')]",
                 "version": "12.0"
             },
             "dependsOn": []
