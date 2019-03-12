@@ -22,20 +22,12 @@
             "defaultValue": "CreateIndex",
             "type": "String"
         },
-        "advisors_DefragmentIndex_name": {
-            "defaultValue": "DefragmentIndex",
-            "type": "String"
-        },
         "auditingPolicies_Default_name": {
             "defaultValue": "Default",
             "type": "String"
         },
         "advisors_ForceLastGoodPlan_name": {
             "defaultValue": "ForceLastGoodPlan",
-            "type": "String"
-        },
-        "advisors_DbParameterization_name": {
-            "defaultValue": "DbParameterization",
             "type": "String"
         },
         "encryptionProtector_current_name": {
@@ -62,28 +54,12 @@
             "defaultValue": "master",
             "type": "String"
         },
-        "geoBackupPolicies_Default_name": {
-            "defaultValue": "Default",
-            "type": "String"
-        },
-        "advisors_DefragmentIndex_name_1": {
-            "defaultValue": "DefragmentIndex",
-            "type": "String"
-        },
         "auditingPolicies_Default_name_2": {
-            "defaultValue": "Default",
-            "type": "String"
-        },
-        "geoBackupPolicies_Default_name_1": {
             "defaultValue": "Default",
             "type": "String"
         },
         "advisors_ForceLastGoodPlan_name_1": {
             "defaultValue": "ForceLastGoodPlan",
-            "type": "String"
-        },
-        "advisors_DbParameterization_name_1": {
-            "defaultValue": "DbParameterization",
             "type": "String"
         },
         "transparentDataEncryption_current_name": {
@@ -159,30 +135,6 @@
         },
         {
             "type": "Microsoft.Sql/servers/advisors",
-            "name": "[concat(variables('server_name'), '/', parameters('advisors_DbParameterization_name'))]",
-            "apiVersion": "2014-04-01",
-            "scale": null,
-            "properties": {
-                "autoExecuteValue": "Disabled"
-            },
-            "dependsOn": [
-                "[resourceId('Microsoft.Sql/servers', variables('server_name'))]"
-            ]
-        },
-        {
-            "type": "Microsoft.Sql/servers/advisors",
-            "name": "[concat(variables('server_name'), '/', parameters('advisors_DefragmentIndex_name'))]",
-            "apiVersion": "2014-04-01",
-            "scale": null,
-            "properties": {
-                "autoExecuteValue": "Disabled"
-            },
-            "dependsOn": [
-                "[resourceId('Microsoft.Sql/servers', variables('server_name'))]"
-            ]
-        },
-        {
-            "type": "Microsoft.Sql/servers/advisors",
             "name": "[concat(variables('server_name'), '/', parameters('advisors_ForceLastGoodPlan_name'))]",
             "apiVersion": "2014-04-01",
             "scale": null,
@@ -200,7 +152,7 @@
             "location": "[parameters('location')]",
             "scale": null,
             "properties": {
-                "auditingState": "New",
+                "auditingState": "Enabled",
                 "eventTypesToAudit": "PlainSQL_Success,PlainSQL_Failure,ParameterizedSQL_Success,ParameterizedSQL_Failure,StoredProcedure_Success,StoredProcedure_Failure,Login_Success,Login_Failure,TransactionManagement_Success,TransactionManagement_Failure",
                 "storageAccountName": null,
                 "storageAccountKey": null,
@@ -285,7 +237,7 @@
             "location": "[parameters('location')]",
             "scale": null,
             "properties": {
-                "auditingState": "New",
+                "auditingState": "Enabled",
                 "eventTypesToAudit": "PlainSQL_Success,PlainSQL_Failure,ParameterizedSQL_Success,ParameterizedSQL_Failure,StoredProcedure_Success,StoredProcedure_Failure,Login_Success,Login_Failure,TransactionManagement_Success,TransactionManagement_Failure",
                 "storageAccountName": null,
                 "storageAccountKey": null,
@@ -297,19 +249,6 @@
                 "fullAuditLogsTableName": "SQLDBAuditLogsTjstest1Master",
                 "auditLogsTableName": "Tjstest1Master",
                 "retentionDays": "0"
-            },
-            "dependsOn": [
-                "[resourceId('Microsoft.Sql/servers', variables('server_name'))]"
-            ]
-        },
-        {
-            "type": "Microsoft.Sql/servers/databases/geoBackupPolicies",
-            "name": "[concat(variables('server_name'), '/', parameters('databases_master_name'), '/', parameters('geoBackupPolicies_Default_name'))]",
-            "apiVersion": "2014-04-01",
-            "location": "[parameters('location')]",
-            "scale": null,
-            "properties": {
-                "state": "Enabled"
             },
             "dependsOn": [
                 "[resourceId('Microsoft.Sql/servers', variables('server_name'))]"
@@ -356,32 +295,6 @@
         },
         {
             "type": "Microsoft.Sql/servers/databases/advisors",
-            "name": "[concat(variables('server_name'), '/', parameters('database_name'), '/', parameters('advisors_DbParameterization_name_1'))]",
-            "apiVersion": "2014-04-01",
-            "scale": null,
-            "properties": {
-                "autoExecuteValue": "Disabled"
-            },
-            "dependsOn": [
-                "[resourceId('Microsoft.Sql/servers', variables('server_name'))]",
-                "[resourceId('Microsoft.Sql/servers/databases', variables('server_name'), parameters('database_name'))]"
-            ]
-        },
-        {
-            "type": "Microsoft.Sql/servers/databases/advisors",
-            "name": "[concat(variables('server_name'), '/', parameters('database_name'), '/', parameters('advisors_DefragmentIndex_name_1'))]",
-            "apiVersion": "2014-04-01",
-            "scale": null,
-            "properties": {
-                "autoExecuteValue": "Disabled"
-            },
-            "dependsOn": [
-                "[resourceId('Microsoft.Sql/servers', variables('server_name'))]",
-                "[resourceId('Microsoft.Sql/servers/databases', variables('server_name'), parameters('database_name'))]"
-            ]
-        },
-        {
-            "type": "Microsoft.Sql/servers/databases/advisors",
             "name": "[concat(variables('server_name'), '/', parameters('database_name'), '/', parameters('advisors_ForceLastGoodPlan_name_1'))]",
             "apiVersion": "2014-04-01",
             "scale": null,
@@ -400,7 +313,7 @@
             "location": "[parameters('location')]",
             "scale": null,
             "properties": {
-                "auditingState": "New",
+                "auditingState": "Enabled",
                 "eventTypesToAudit": "PlainSQL_Success,PlainSQL_Failure,ParameterizedSQL_Success,ParameterizedSQL_Failure,StoredProcedure_Success,StoredProcedure_Failure,Login_Success,Login_Failure,TransactionManagement_Success,TransactionManagement_Failure",
                 "storageAccountName": null,
                 "storageAccountKey": null,
@@ -412,20 +325,6 @@
                 "fullAuditLogsTableName": "SQLDBAuditLogsTjstest1Tjstest",
                 "auditLogsTableName": "Tjstest1Tjstest",
                 "retentionDays": "0"
-            },
-            "dependsOn": [
-                "[resourceId('Microsoft.Sql/servers', variables('server_name'))]",
-                "[resourceId('Microsoft.Sql/servers/databases', variables('server_name'), parameters('database_name'))]"
-            ]
-        },
-        {
-            "type": "Microsoft.Sql/servers/databases/geoBackupPolicies",
-            "name": "[concat(variables('server_name'), '/', parameters('database_name'), '/', parameters('geoBackupPolicies_Default_name_1'))]",
-            "apiVersion": "2014-04-01",
-            "location": "[parameters('location')]",
-            "scale": null,
-            "properties": {
-                "state": "Enabled"
             },
             "dependsOn": [
                 "[resourceId('Microsoft.Sql/servers', variables('server_name'))]",
