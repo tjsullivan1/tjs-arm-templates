@@ -10,36 +10,12 @@
             "defaultValue": "def_db",
             "type": "String"
         },
-        "advisors_DropIndex_name": {
-            "defaultValue": "DropIndex",
-            "type": "String"
-        },
-        "advisors_CreateIndex_name": {
-            "defaultValue": "CreateIndex",
-            "type": "String"
-        },
-        "advisors_ForceLastGoodPlan_name": {
-            "defaultValue": "ForceLastGoodPlan",
-            "type": "String"
-        },
         "encryptionProtector_current_name": {
             "defaultValue": "current",
             "type": "String"
         },
-        "advisors_DropIndex_name_1": {
-            "defaultValue": "DropIndex",
-            "type": "String"
-        },
         "firewallRules_AllowAllWindowsAzureIps_name": {
             "defaultValue": "AllowAllWindowsAzureIps",
-            "type": "String"
-        },
-        "advisors_CreateIndex_name_1": {
-            "defaultValue": "CreateIndex",
-            "type": "String"
-        },
-        "advisors_ForceLastGoodPlan_name_1": {
-            "defaultValue": "ForceLastGoodPlan",
             "type": "String"
         },
         "transparentDataEncryption_current_name": {
@@ -84,42 +60,6 @@
                 "version": "12.0"
             },
             "dependsOn": []
-        },
-        {
-            "type": "Microsoft.Sql/servers/advisors",
-            "name": "[concat(variables('server_name'), '/', parameters('advisors_CreateIndex_name'))]",
-            "apiVersion": "2014-04-01",
-            "scale": null,
-            "properties": {
-                "autoExecuteValue": "Disabled"
-            },
-            "dependsOn": [
-                "[resourceId('Microsoft.Sql/servers', variables('server_name'))]"
-            ]
-        },
-        {
-            "type": "Microsoft.Sql/servers/advisors",
-            "name": "[concat(variables('server_name'), '/', parameters('advisors_DropIndex_name'))]",
-            "apiVersion": "2014-04-01",
-            "scale": null,
-            "properties": {
-                "autoExecuteValue": "Disabled"
-            },
-            "dependsOn": [
-                "[resourceId('Microsoft.Sql/servers', variables('server_name'))]"
-            ]
-        },
-        {
-            "type": "Microsoft.Sql/servers/advisors",
-            "name": "[concat(variables('server_name'), '/', parameters('advisors_ForceLastGoodPlan_name'))]",
-            "apiVersion": "2014-04-01",
-            "scale": null,
-            "properties": {
-                "autoExecuteValue": "Disabled"
-            },
-            "dependsOn": [
-                "[resourceId('Microsoft.Sql/servers', variables('server_name'))]"
-            ]
         },
         {
             "type": "Microsoft.Sql/servers/databases",
@@ -168,45 +108,6 @@
             },
             "dependsOn": [
                 "[resourceId('Microsoft.Sql/servers', variables('server_name'))]"
-            ]
-        },
-        {
-            "type": "Microsoft.Sql/servers/databases/advisors",
-            "name": "[concat(variables('server_name'), '/', parameters('database_name'), '/', parameters('advisors_CreateIndex_name_1'))]",
-            "apiVersion": "2014-04-01",
-            "scale": null,
-            "properties": {
-                "autoExecuteValue": "Disabled"
-            },
-            "dependsOn": [
-                "[resourceId('Microsoft.Sql/servers', variables('server_name'))]",
-                "[resourceId('Microsoft.Sql/servers/databases', variables('server_name'), parameters('database_name'))]"
-            ]
-        },
-        {
-            "type": "Microsoft.Sql/servers/databases/advisors",
-            "name": "[concat(variables('server_name'), '/', parameters('database_name'), '/', parameters('advisors_DropIndex_name_1'))]",
-            "apiVersion": "2014-04-01",
-            "scale": null,
-            "properties": {
-                "autoExecuteValue": "Disabled"
-            },
-            "dependsOn": [
-                "[resourceId('Microsoft.Sql/servers', variables('server_name'))]",
-                "[resourceId('Microsoft.Sql/servers/databases', variables('server_name'), parameters('database_name'))]"
-            ]
-        },
-        {
-            "type": "Microsoft.Sql/servers/databases/advisors",
-            "name": "[concat(variables('server_name'), '/', parameters('database_name'), '/', parameters('advisors_ForceLastGoodPlan_name_1'))]",
-            "apiVersion": "2014-04-01",
-            "scale": null,
-            "properties": {
-                "autoExecuteValue": "Disabled"
-            },
-            "dependsOn": [
-                "[resourceId('Microsoft.Sql/servers', variables('server_name'))]",
-                "[resourceId('Microsoft.Sql/servers/databases', variables('server_name'), parameters('database_name'))]"
             ]
         },
         {
