@@ -14,10 +14,6 @@
             "defaultValue": "DropIndex",
             "type": "String"
         },
-        "keys_ServiceManaged_name": {
-            "defaultValue": "ServiceManaged",
-            "type": "String"
-        },
         "advisors_CreateIndex_name": {
             "defaultValue": "CreateIndex",
             "type": "String"
@@ -42,19 +38,11 @@
             "defaultValue": "CreateIndex",
             "type": "String"
         },
-        "databases_master_name": {
-            "defaultValue": "master",
-            "type": "String"
-        },
         "advisors_ForceLastGoodPlan_name_1": {
             "defaultValue": "ForceLastGoodPlan",
             "type": "String"
         },
         "transparentDataEncryption_current_name": {
-            "defaultValue": "current",
-            "type": "String"
-        },
-        "transparentDataEncryption_current_name_1": {
             "defaultValue": "current",
             "type": "String"
         },
@@ -183,19 +171,6 @@
             ]
         },
         {
-            "type": "Microsoft.Sql/servers/databases/transparentDataEncryption",
-            "name": "[concat(variables('server_name'), '/', parameters('databases_master_name'), '/', parameters('transparentDataEncryption_current_name'))]",
-            "apiVersion": "2014-04-01",
-            "location": "[parameters('location')]",
-            "scale": null,
-            "properties": {
-                "status": "Disabled"
-            },
-            "dependsOn": [
-                "[resourceId('Microsoft.Sql/servers', variables('server_name'))]"
-            ]
-        },
-        {
             "type": "Microsoft.Sql/servers/databases/advisors",
             "name": "[concat(variables('server_name'), '/', parameters('database_name'), '/', parameters('advisors_CreateIndex_name_1'))]",
             "apiVersion": "2014-04-01",
@@ -236,7 +211,7 @@
         },
         {
             "type": "Microsoft.Sql/servers/databases/transparentDataEncryption",
-            "name": "[concat(variables('server_name'), '/', parameters('database_name'), '/', parameters('transparentDataEncryption_current_name_1'))]",
+            "name": "[concat(variables('server_name'), '/', parameters('database_name'), '/', parameters('transparentDataEncryption_current_name'))]",
             "apiVersion": "2014-04-01",
             "location": "[parameters('location')]",
             "scale": null,
