@@ -22,10 +22,6 @@
             "defaultValue": "CreateIndex",
             "type": "String"
         },
-        "auditingPolicies_Default_name": {
-            "defaultValue": "Default",
-            "type": "String"
-        },
         "advisors_ForceLastGoodPlan_name": {
             "defaultValue": "ForceLastGoodPlan",
             "type": "String"
@@ -46,16 +42,8 @@
             "defaultValue": "CreateIndex",
             "type": "String"
         },
-        "auditingPolicies_Default_name_1": {
-            "defaultValue": "Default",
-            "type": "String"
-        },
         "databases_master_name": {
             "defaultValue": "master",
-            "type": "String"
-        },
-        "auditingPolicies_Default_name_2": {
-            "defaultValue": "Default",
             "type": "String"
         },
         "advisors_ForceLastGoodPlan_name_1": {
@@ -146,29 +134,6 @@
             ]
         },
         {
-            "type": "Microsoft.Sql/servers/auditingPolicies",
-            "name": "[concat(variables('server_name'), '/', parameters('auditingPolicies_Default_name'))]",
-            "apiVersion": "2014-04-01",
-            "location": "[parameters('location')]",
-            "scale": null,
-            "properties": {
-                "auditingState": "Enabled",
-                "eventTypesToAudit": "PlainSQL_Success,PlainSQL_Failure,ParameterizedSQL_Success,ParameterizedSQL_Failure,StoredProcedure_Success,StoredProcedure_Failure,Login_Success,Login_Failure,TransactionManagement_Success,TransactionManagement_Failure",
-                "storageAccountName": null,
-                "storageAccountKey": null,
-                "storageAccountSecondaryKey": null,
-                "storageTableEndpoint": null,
-                "storageAccountResourceGroupName": null,
-                "storageAccountSubscriptionId": null,
-                "fullAuditLogsTableName": "SQLDBAuditLogsTjstest1",
-                "auditLogsTableName": "Tjstest1",
-                "retentionDays": "0"
-            },
-            "dependsOn": [
-                "[resourceId('Microsoft.Sql/servers', variables('server_name'))]"
-            ]
-        },
-        {
             "type": "Microsoft.Sql/servers/databases",
             "sku": {
                 "name": "S0",
@@ -212,43 +177,6 @@
             "properties": {
                 "serverKeyName": "ServiceManaged",
                 "serverKeyType": "ServiceManaged"
-            },
-            "dependsOn": [
-                "[resourceId('Microsoft.Sql/servers', variables('server_name'))]"
-            ]
-        },
-        {
-            "type": "Microsoft.Sql/servers/keys",
-            "kind": "servicemanaged",
-            "name": "[concat(variables('server_name'), '/', parameters('keys_ServiceManaged_name'))]",
-            "apiVersion": "2015-05-01-preview",
-            "scale": null,
-            "properties": {
-                "serverKeyType": "[parameters('keys_ServiceManaged_name')]"
-            },
-            "dependsOn": [
-                "[resourceId('Microsoft.Sql/servers', variables('server_name'))]"
-            ]
-        },
-        {
-            "type": "Microsoft.Sql/servers/databases/auditingPolicies",
-            "name": "[concat(variables('server_name'), '/', parameters('databases_master_name'), '/', parameters('auditingPolicies_Default_name_1'))]",
-            "apiVersion": "2014-04-01",
-            "location": "[parameters('location')]",
-            "scale": null,
-            "properties": {
-                "auditingState": "Enabled",
-                "eventTypesToAudit": "PlainSQL_Success,PlainSQL_Failure,ParameterizedSQL_Success,ParameterizedSQL_Failure,StoredProcedure_Success,StoredProcedure_Failure,Login_Success,Login_Failure,TransactionManagement_Success,TransactionManagement_Failure",
-                "storageAccountName": null,
-                "storageAccountKey": null,
-                "storageAccountSecondaryKey": null,
-                "storageTableEndpoint": null,
-                "storageAccountResourceGroupName": null,
-                "storageAccountSubscriptionId": null,
-                "useServerDefault": "Enabled",
-                "fullAuditLogsTableName": "SQLDBAuditLogsTjstest1Master",
-                "auditLogsTableName": "Tjstest1Master",
-                "retentionDays": "0"
             },
             "dependsOn": [
                 "[resourceId('Microsoft.Sql/servers', variables('server_name'))]"
@@ -300,31 +228,6 @@
             "scale": null,
             "properties": {
                 "autoExecuteValue": "Disabled"
-            },
-            "dependsOn": [
-                "[resourceId('Microsoft.Sql/servers', variables('server_name'))]",
-                "[resourceId('Microsoft.Sql/servers/databases', variables('server_name'), parameters('database_name'))]"
-            ]
-        },
-        {
-            "type": "Microsoft.Sql/servers/databases/auditingPolicies",
-            "name": "[concat(variables('server_name'), '/', parameters('database_name'), '/', parameters('auditingPolicies_Default_name_2'))]",
-            "apiVersion": "2014-04-01",
-            "location": "[parameters('location')]",
-            "scale": null,
-            "properties": {
-                "auditingState": "Enabled",
-                "eventTypesToAudit": "PlainSQL_Success,PlainSQL_Failure,ParameterizedSQL_Success,ParameterizedSQL_Failure,StoredProcedure_Success,StoredProcedure_Failure,Login_Success,Login_Failure,TransactionManagement_Success,TransactionManagement_Failure",
-                "storageAccountName": null,
-                "storageAccountKey": null,
-                "storageAccountSecondaryKey": null,
-                "storageTableEndpoint": null,
-                "storageAccountResourceGroupName": null,
-                "storageAccountSubscriptionId": null,
-                "useServerDefault": "Enabled",
-                "fullAuditLogsTableName": "SQLDBAuditLogsTjstest1Tjstest",
-                "auditLogsTableName": "Tjstest1Tjstest",
-                "retentionDays": "0"
             },
             "dependsOn": [
                 "[resourceId('Microsoft.Sql/servers', variables('server_name'))]",
