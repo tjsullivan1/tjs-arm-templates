@@ -1,0 +1,34 @@
+{
+    "contentVersion": "1.0.0.0",
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "parameters": {
+        "dataFactoryName": {
+            "type": "string",
+            "metadata": {
+                "description": "Name of the data factory. Must be globally unique."
+            }
+        },
+        "dataFactoryLocation": {
+            "type": "string",
+            "allowedValues": [
+                "East US",
+                "East US 2",
+                "West Europe"
+            ],
+            "defaultValue": "East US",
+            "metadata": {
+                "description": "Location of the data factory. Currently, only East US, East US 2, and West Europe are supported. "
+            }
+        }
+    },
+    "variables": {},
+    "resources": [{
+        "name": "[parameters('dataFactoryName')]",
+        "apiVersion": "2018-06-01",
+        "type": "Microsoft.DataFactory/factories",
+        "location": "[parameters('dataFactoryLocation')]",
+        "identity": {
+            "type": "SystemAssigned"
+        }
+    }]
+}
