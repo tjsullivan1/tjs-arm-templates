@@ -9,9 +9,11 @@
         "actionGroups__shortname": {
             "defaultValue": "myag",
             "type": "String"
-        }        
+        }
     },
-    "variables": {},
+    "variables": {
+        "emailReceivers": {}
+    },
     "resources": [
         {
             "type": "microsoft.insights/actionGroups",
@@ -20,8 +22,12 @@
             "location": "Global",
             "properties": {
                 "groupShortName": "[parameters('actionGroups__shortname')]",
-                "enabled": true
+                "enabled": true,
+                "emailReceivers": {}
             }
         }
     ]
 }
+
+
+
