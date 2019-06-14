@@ -35,7 +35,7 @@
     "variables": {
         "sendEmail?": "[not(empty(parameters('emailAddress')))]",
         "emailReceiversProperties": {
-            "name": "[concat(parameters('action_prefix'), '-', 'email')]",
+            "name": "[concat(parameters('action_prefix'), 'email')]",
             "emailAddress": "[parameters('emailAddress')]",
             "useCommonAlertSchema": "[parameters('common_alert_schema')]"
         }
@@ -49,7 +49,7 @@
             "properties": {
                 "groupShortName": "[parameters('actionGroups__shortname')]",
                 "enabled": true,
-                "emailReceivers": "[if(variables('sendEmail?'), variables('emailReceiversProperties'), json('null'))]"
+                "emailReceivers": ["[if(variables('sendEmail?'), variables('emailReceiversProperties'), json('null'))]"]
             }
         }
     ]
