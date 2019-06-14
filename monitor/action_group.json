@@ -9,10 +9,36 @@
         "actionGroups__shortname": {
             "defaultValue": "myag",
             "type": "String"
+        },
+        "action_prefix": {
+           "type": "string",
+           "metadata": {
+                "description": "This is a shared name across all of the different possible acitons. It will concatenate to form a sensible name based on the type of action."
+            },
+            "defaultValue": "action"
+        },
+        "common_alert_schema": {
+           "type": "bool",
+           "metadata": {
+                "description": "Specifies whether or not to use the common alert schema. This will be consistent across all actions."
+            },
+            "defaultValue": false
+        },
+        "emailAddress": {
+           "type": "string",
+           "metadata": {
+                "description": "Specify an email address to send alerts to."
+            },
+            "defaultValue": ""
         }
     },
     "variables": {
-        "emailReceivers": {}
+        "sendEmail?": "[not(empty(parameters('emailAddress')))]",
+        "emailReceiversProperties": {
+            "name": "[concat(parameters('action_prefix'), '-', 'email')]",
+            "emailAddress": "[parameters('emailAddress')]",
+            "useCommonAlertSchema": "[parameters('common_alert_schema')]"
+        }
     },
     "resources": [
         {
@@ -23,7 +49,7 @@
             "properties": {
                 "groupShortName": "[parameters('actionGroups__shortname')]",
                 "enabled": true,
-                "emailReceivers": {}
+                "emailReceivers": "[if(variables('sendEmail?'), variables('emailReceiversProperties'), json('null'))]"
             }
         }
     ]
