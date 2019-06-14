@@ -30,15 +30,156 @@
                 "description": "Specify an email address to send alerts to."
             },
             "defaultValue": ""
-        }
+        },
+        "voiceNumber": {
+           "type": "string",
+           "metadata": {
+                "description": "Specify an phone number to call with an alert."
+            },
+            "defaultValue": ""
+        },
+        "smsNumber": {
+           "type": "string",
+           "metadata": {
+                "description": "Specify an phone number to text with an alert."
+            },
+            "defaultValue": ""
+        },
+        "webhookURI": {
+            "type": "string",
+            "metadata": {
+                 "description": "Specify a webhook to invoke with an alert"
+             },
+             "defaultValue": ""
+         },
+         "automationAccountId": {
+            "type": "string",
+            "metadata": {
+                 "description": ""
+            },
+            "defaultValue": ""
+         },
+        "runbookName": {
+            "type": "string",
+            "metadata": {
+                    "description": "Specify the runbook to invoke with an alert."
+            },
+            "defaultValue": ""
+        },
+        "webhookResourceId": {
+            "type": "string",
+            "metadata": {
+                    "description": ""
+            },
+            "defaultValue": ""
+        },
+        "isGlobalRunbook": {
+            "type": "string",
+            "metadata": {
+                    "description": "Specify True if this is a built-in runbook."
+            },
+            "defaultValue": false
+        },
+        "azureAutomationServiceURI": {
+            "type": "string",
+            "metadata": {
+                    "description": "Specify the serviceUri for Azure Automation... NOTE: THIS CONTENTS A TOKEN AND SHOULD BE TREATED AS A SECRET VALUE"
+            },
+            "defaultValue": ""
+        },
+        "logicAppResourceId": {
+            "type": "string",
+            "metadata": {
+                    "description": "//TODO Add real description"
+            },
+            "defaultValue": ""
+        },
+        "logicAppCallbackUrl": {
+            "type": "string",
+            "metadata": {
+                    "description": "//TODO Add real description"
+            },
+            "defaultValue": ""
+        },  
+        "functions_externalid": {
+            "type": "string",
+            "metadata": {
+                    "description": "//TODO Add real description"
+            },
+            "defaultValue": ""
+        },
+        "functions_name": {
+            "type": "string",
+            "metadata": {
+                    "description": "//TODO Add real description"
+            },
+            "defaultValue": ""
+        },
+        "functions_trigger_url": {
+            "type": "string",
+            "metadata": {
+                    "description": "//TODO Add real description"
+            },
+            "defaultValue": ""
+        }    
     },
     "variables": {
         "sendEmail?": "[not(empty(parameters('emailAddress')))]",
-        "emailReceiversProperties": {
-            "name": "[concat(parameters('action_prefix'), 'email')]",
-            "emailAddress": "[parameters('emailAddress')]",
-            "useCommonAlertSchema": "[parameters('common_alert_schema')]"
-        }
+        "emailReceiversProperties": 
+            {
+                "name": "[concat(parameters('action_prefix'), '-email')]",
+                "emailAddress": "[parameters('emailAddress')]",
+                "useCommonAlertSchema": "[parameters('common_alert_schema')]"
+            },
+        "call?": "[not(empty(parameters('voiceNumber')))]",
+        "voiceReceiversProperties":
+        {
+            "name": "[concat(parameters('action_prefix'), '-call')]",
+            "countryCode": "1", // TODO make this work with non-US phone numbers
+            "phoneNumber": "[parameters('voiceNumber')]"
+        },
+        "text?": "[not(empty(parameters('smsNumber')))]",
+        "smsReceiversProperties":
+            {
+                "name": "[concat(parameters('action_prefix'), '-sms')]",
+                "countryCode": "1", // TODO make this work with non-US phone numbers
+                "phoneNumber": "[parameters('smsNumber')]"
+            },
+        "webhook?": "[not(empty(parameters('webhookURI')))]",
+        "webhookReceiversProperties":
+            {
+                "name": "[concat(parameters('action_prefix'), '-webhook')]",
+                "serviceUri": "[parameters('webhookURI')]",
+                "useCommonAlertSchema": "[parameters('common_alert_schema')]"
+            },
+        "azureautomation?": "[not(empty(parameters('webhookURI')))]", // TODO need a more complex statement for all of the different options
+        "automationRunbookReceiversProperties":
+            {
+                "automationAccountId": "[parameters('automationAccountId')]",
+                "runbookName": "[parameters('runbookName')]",
+                "webhookResourceId": "[concat(parameters('automationAccountId'), '/webhooks/', parameters('webhookResourceId'))]",
+                "isGlobalRunbook": "[parameters('isGlobalRunbook')]",
+                "name": "[concat(parameters('action_prefix'), '-aa')]",
+                "serviceUri": "[parameters('azureAutomationServiceURI')]",
+                "useCommonAlertSchema": "[parameters('common_alert_schema')]"
+            },
+        "logicapps?": "[not(empty(parameters('webhookURI')))]", // TODO need a more complex statement for all of the different options
+        "logicAppReceiversProperties":                    
+            {
+                "name": "[concat(parameters('action_prefix'), '-logicapp')]",
+                "resourceId": "[parameters('logicAppResourceId')]",
+                "callbackUrl": "[parameters('logicAppCallbackUrl')]",
+                "useCommonAlertSchema": "[parameters('common_alert_schema')]"
+            },
+        "functions?": "[not(empty(parameters('webhookURI')))]", // TODO need a more complex statement for all of the different options
+        "azureFunctionReceiversProperties":
+            {
+                "name": "[concat(parameters('action_prefix'), '-function')]",
+                "functionAppResourceId": "[parameters('functions_externalid')]",
+                "functionName": "[parameters('functions_name')]",
+                "httpTriggerUrl": "[parameters('functions_trigger_url')]",
+                "useCommonAlertSchema": "[parameters('common_alert_schema')]"
+            }
     },
     "resources": [
         {
@@ -49,7 +190,15 @@
             "properties": {
                 "groupShortName": "[parameters('actionGroups__shortname')]",
                 "enabled": true,
-                "emailReceivers": ["[if(variables('sendEmail?'), variables('emailReceiversProperties'), json('null'))]"]
+                "emailReceivers": ["[if(variables('sendEmail?'), variables('emailReceiversProperties'), json('null'))]"],
+                "smsReceivers": ["[if(variables('text?'), variables('smsReceiversProperties'), json('null'))]"],
+                "voiceReceivers": ["[if(variables('call?'), variables('voiceReceiversProperties'), json('null'))]"],
+                "webhookReceivers": ["[if(variables('webhook?'), variables('webhookReceiversProperties'), json('null'))]"],
+                "itsmReceivers": [], // TODO add ITSM support...
+                "azureAppPushReceivers": [], // I don't know if this is something that is desired. This is done via email address. I could specify with a parameter called "upn", but I don't like that.
+                "automationRunbookReceivers": ["[if(variables('azureautomation?'), variables('automationRunbookReceiversProperties'), json('null'))]"],
+                "logicAppReceivers": ["[if(variables('logicapps?'), variables('logicAppReceiversProperties'), json('null'))]"],
+                "azureFunctionReceivers": ["[if(variables('functions?'), variables('azureFunctionReceiversProperties'), json('null'))]"],       
             }
         }
     ]
