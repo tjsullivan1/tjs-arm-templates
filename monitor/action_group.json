@@ -1,0 +1,27 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "actionGroups__name": {
+            "defaultValue": "myActionGroup",
+            "type": "String"
+        },
+        "actionGroups__shortname": {
+            "defaultValue": "myag",
+            "type": "String"
+        }        
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "microsoft.insights/actionGroups",
+            "apiVersion": "2019-03-01",
+            "name": "[parameters('actionGroups__name')]",
+            "location": "Global",
+            "properties": {
+                "groupShortName": "[parameters('actionGroups__shortname')]",
+                "enabled": true
+            }
+        }
+    ]
+}
