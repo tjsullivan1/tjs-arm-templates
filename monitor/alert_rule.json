@@ -1,0 +1,76 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "metricAlerts_name": {
+            "type": "String"
+        },
+        "scope_externalid": {
+            "type": "String"
+        },
+        "alert_description": {
+           "type": "string",
+           "metadata": {
+                "description": ""
+            }
+        },
+        "alert_severity": {
+           "type": "string",
+           "metadata": {
+                "description": ""
+            }
+        },
+        "alert_evaluationFrequency": {
+           "type": "string",
+           "metadata": {
+                "description": ""
+            },
+            "defaultValue": "PT1M"
+        },
+        "alert_windowSize": {
+           "type": "string",
+           "metadata": {
+                "description": ""
+            },
+            "defaultValue": "PT5M"
+        },
+        "alert_criteria": {
+           "type": "object",
+           "metadata": {
+                "description": ""
+            }
+        },
+        "actionGroup_name": {
+           "type": "string",
+           "metadata": {
+                "description": "The name for the action group that will be invoked by this alert."
+            }
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Insights/metricAlerts",
+            "apiVersion": "2018-03-01",
+            "name": "[parameters('metricAlerts_name')]",
+            "location": "global",
+            "properties": {
+                "description": "[if(empty(parameters('alert_description')), json('null'), parameters('alert_description'))]",
+                "severity": "[if(empty(parameters('alert_severity')), json('null'), parameters('alert_severity'))]",
+                "enabled": true,
+                "scopes": [
+                    "[parameters('scope_externalid')]"
+                ],
+                "evaluationFrequency": "[parameters('alert_evaluationFrequency')]",
+                "windowSize": "[parameters('alert_windowSize')]",
+                "criteria": "[parameters('alert_criteria')]",
+                "actions": [
+                    {
+                        "actionGroupId": "[resourceId('microsoft.insights/actionGroups', parameters('actionGroup_name'))]",
+                        "webHookProperties": {}
+                    }
+                ]
+            }
+        }
+    ]
+}
