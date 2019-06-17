@@ -59,14 +59,14 @@
             },
             "defaultValue": ""
          },
-        "runbookName": {
+        "automationRunbookName": {
             "type": "string",
             "metadata": {
                     "description": "Specify the runbook to invoke with an alert."
             },
             "defaultValue": ""
         },
-        "webhookResourceId": {
+        "automationWebhookResourceId": {
             "type": "string",
             "metadata": {
                     "description": ""
@@ -152,18 +152,18 @@
                 "serviceUri": "[parameters('webhookURI')]",
                 "useCommonAlertSchema": "[parameters('common_alert_schema')]"
             },
-        "azureautomation?": "[not(empty(parameters('webhookURI')))]", // TODO need a more complex statement for all of the different options
+        "azureautomation?": "[and(not(empty(parameters('azureAutomationServiceURI'))), not(empty(parameters('automationAccountId'))), not(empty(parameters('automationRunbookName'))), not(empty(parameters('automationWebhookResourceId'))))]",
         "automationRunbookReceiversProperties":
             {
                 "automationAccountId": "[parameters('automationAccountId')]",
-                "runbookName": "[parameters('runbookName')]",
-                "webhookResourceId": "[concat(parameters('automationAccountId'), '/webhooks/', parameters('webhookResourceId'))]",
+                "runbookName": "[parameters('automationRunbookName')]",
+                "webhookResourceId": "[concat(parameters('automationAccountId'), '/webhooks/', parameters('automationWebhookResourceId'))]",
                 "isGlobalRunbook": "[parameters('isGlobalRunbook')]",
                 "name": "[concat(parameters('action_prefix'), '-aa')]",
                 "serviceUri": "[parameters('azureAutomationServiceURI')]",
                 "useCommonAlertSchema": "[parameters('common_alert_schema')]"
             },
-        "logicapps?": "[not(empty(parameters('webhookURI')))]", // TODO need a more complex statement for all of the different options
+        "logicapps?": "[and(not(empty(parameters('logicAppResourceId'))), not(empty(parameters('logicAppCallbackUrl'))))]",
         "logicAppReceiversProperties":                    
             {
                 "name": "[concat(parameters('action_prefix'), '-logicapp')]",
@@ -171,7 +171,7 @@
                 "callbackUrl": "[parameters('logicAppCallbackUrl')]",
                 "useCommonAlertSchema": "[parameters('common_alert_schema')]"
             },
-        "functions?": "[not(empty(parameters('webhookURI')))]", // TODO need a more complex statement for all of the different options
+        "functions?": "[and(not(empty(parameters('functions_externalid'))), not(empty(parameters('functions_name'))), not(empty(parameters('functions_trigger_url'))))]",
         "azureFunctionReceiversProperties":
             {
                 "name": "[concat(parameters('action_prefix'), '-function')]",
@@ -198,7 +198,7 @@
                 "azureAppPushReceivers": [], // I don't know if this is something that is desired. This is done via email address. I could specify with a parameter called "upn", but I don't like that.
                 "automationRunbookReceivers": ["[if(variables('azureautomation?'), variables('automationRunbookReceiversProperties'), json('null'))]"],
                 "logicAppReceivers": ["[if(variables('logicapps?'), variables('logicAppReceiversProperties'), json('null'))]"],
-                "azureFunctionReceivers": ["[if(variables('functions?'), variables('azureFunctionReceiversProperties'), json('null'))]"],       
+                "azureFunctionReceivers": ["[if(variables('functions?'), variables('azureFunctionReceiversProperties'), json('null'))]"]       
             }
         }
     ]
