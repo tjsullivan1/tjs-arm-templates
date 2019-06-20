@@ -40,10 +40,10 @@
                 "description": ""
             }
         },
-        "actionGroup_name": {
+        "actionGroup_id": {
            "type": "string",
            "metadata": {
-                "description": "The name for the action group that will be invoked by this alert."
+                "description": "The full resource ID for the action group that will be invoked by this alert."
             }
         }
     },
@@ -66,7 +66,7 @@
                 "criteria": "[parameters('alert_criteria')]",
                 "actions": [
                     {
-                        "actionGroupId": "[resourceId('microsoft.insights/actionGroups', parameters('actionGroup_name'))]",
+                        "actionGroupId": "[parameters('actionGroup_id')]",
                         "webHookProperties": {}
                     }
                 ]
