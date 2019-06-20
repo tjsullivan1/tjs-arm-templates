@@ -1,0 +1,53 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "servers_name": {
+            "defaultValue": "my_aas",
+            "type": "string"
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "[resourceGroup().location]",
+            "metadata": {
+                "description": "Location for all resources."
+            }
+        },
+        "aas_sku": {
+           "type": "string",
+           "metadata": {
+                "description": "Which SKU size should we be using?"
+            },
+            "defaultValue": "S0"
+        },
+        "asAdministrators": {
+           "type": "array",
+           "metadata": {
+                "description": "A list of administrators for the service."
+            },
+            "defaultValue": []
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.AnalysisServices/servers",
+            "apiVersion": "2017-08-01",
+            "name": "[parameters('servers_name')]",
+            "location": "[parameters('location')]",
+            "sku": {
+                "name": "[parameters('aas_sku')]",
+                "tier": "Standard",
+                "capacity": 1
+            },
+            "properties": {
+                "managedMode": 1,
+                "asAdministrators": {
+                    "members": "[parameters('asAdministrators')]"
+                },
+                "querypoolConnectionMode": "All",
+                "serverMonitorMode": 1
+            }
+        }
+    ]
+}
