@@ -2,11 +2,11 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "actionGroups__name": {
+        "actionGroups_name": {
             "defaultValue": "myActionGroup",
             "type": "String"
         },
-        "actionGroups__shortname": {
+        "actionGroups_shortname": {
             "defaultValue": "myag",
             "type": "String"
         },
@@ -185,10 +185,10 @@
         {
             "type": "microsoft.insights/actionGroups",
             "apiVersion": "2019-03-01",
-            "name": "[parameters('actionGroups__name')]",
+            "name": "[parameters('actionGroups_name')]",
             "location": "Global",
             "properties": {
-                "groupShortName": "[parameters('actionGroups__shortname')]",
+                "groupShortName": "[parameters('actionGroups_shortname')]",
                 "enabled": true,
                 "emailReceivers": ["[if(variables('sendEmail?'), variables('emailReceiversProperties'), json('null'))]"],
                 "smsReceivers": ["[if(variables('text?'), variables('smsReceiversProperties'), json('null'))]"],
@@ -201,7 +201,13 @@
                 "azureFunctionReceivers": ["[if(variables('functions?'), variables('azureFunctionReceiversProperties'), json('null'))]"]       
             }
         }
-    ]
+    ],
+    "outputs": {
+        "action_group_id": {
+            "type": "string",
+            "value": "[reference(parameters('actionGroups_name').id)]"
+        }
+    }
 }
 
 
