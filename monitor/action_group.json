@@ -4,11 +4,11 @@
     "parameters": {
         "actionGroups_name": {
             "defaultValue": "myActionGroup",
-            "type": "String"
+            "type": "string"
         },
         "actionGroups_shortname": {
             "defaultValue": "myag",
-            "type": "String"
+            "type": "string"
         },
         "action_prefix": {
            "type": "string",
