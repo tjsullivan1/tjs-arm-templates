@@ -74,7 +74,7 @@
             "defaultValue": ""
         },
         "isGlobalRunbook": {
-            "type": "string",
+            "type": "bool",
             "metadata": {
                     "description": "Specify True if this is a built-in runbook."
             },
