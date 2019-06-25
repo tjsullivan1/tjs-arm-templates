@@ -205,7 +205,7 @@
     "outputs": {
         "action_group_id": {
             "type": "string",
-            "value": "[reference(parameters('actionGroups_name').id)]"
+            "value": "test"
         }
     }
 }
