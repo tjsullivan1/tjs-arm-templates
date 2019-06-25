@@ -190,15 +190,7 @@
             "properties": {
                 "groupShortName": "[parameters('actionGroups_shortname')]",
                 "enabled": true,
-                "emailReceivers": "[if(variables('sendEmail?'), variables('emailReceiversProperties'), json('null'))]",
-                "smsReceivers": "[if(variables('text?'), variables('smsReceiversProperties'), json('null'))]",
-                "voiceReceivers": "[if(variables('call?'), variables('voiceReceiversProperties'), json('null'))]",
-                "webhookReceivers": "[if(variables('webhook?'), variables('webhookReceiversProperties'), json('null'))]",
-                "itsmReceivers": [], 
-                "azureAppPushReceivers": [], 
-                "automationRunbookReceivers": "[if(variables('azureautomation?'), variables('automationRunbookReceiversProperties'), json('null'))]",
-                "logicAppReceivers": "[if(variables('logicapps?'), variables('logicAppReceiversProperties'), json('null'))]",
-                "azureFunctionReceivers": "[if(variables('functions?'), variables('azureFunctionReceiversProperties'), json('null'))]"       
+                "emailReceivers": "[if(variables('sendEmail?'), variables('emailReceiversProperties'), json('null'))]"    
             }
         }
     ],
